@@ -145,6 +145,7 @@ export default class TerrainSprite {
             terrainSprite.width = tileSizeX;
             terrainSprite.height = tileSizeY;
             this.containerSprite.addChild(terrainSprite);
+
             return terrainSprite;
         }
         return backgroundTerrainSprite;

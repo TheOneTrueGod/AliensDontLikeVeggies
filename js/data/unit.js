@@ -1,29 +1,4 @@
 import { getTileSize } from "../constants.js";
-import { SpriteList } from "../sprites.js";
-
-export const UnitDefs = {
-    AlienAdult: {
-        spritesheet: {
-            name: SpriteList.ALIEN_ADULT,
-            spritesInSheet: { x: 1, y: 1 },
-            spriteCoords: { x: 0, y: 0 },
-        },
-    },
-    AlienYoung: {
-        spritesheet: {
-            name: SpriteList.ALIEN_YOUNG,
-            spritesInSheet: { x: 1, y: 1 },
-            spriteCoords: { x: 0, y: 0 },
-        },
-    },
-    AlienEgg: {
-        spritesheet: {
-            name: SpriteList.ALIEN_EGG,
-            spritesInSheet: { x: 1, y: 1 },
-            spriteCoords: { x: 0, y: 0 },
-        },
-    }
-}
 
 export default class Unit {
     constructor(tileCoord, unitDef) {
@@ -31,6 +6,9 @@ export default class Unit {
         this.unitDef = unitDef;
 
         this.sprite = undefined;
+        this.spriteContainer = new PIXI.Sprite();
+        this.spriteVariant = 0;
+        this.spriteDirty = true;
     }
 
     getSpriteFromDef(pixiLoader) {
@@ -43,8 +21,8 @@ export default class Unit {
         };
 
         const t32Rect = new PIXI.Rectangle(
-            imageSize.x * spriteDef.spriteCoords.x,
-            imageSize.y * spriteDef.spriteCoords.y,
+            imageSize.x * spriteDef.spriteCoords[this.spriteVariant].x,
+            imageSize.y * spriteDef.spriteCoords[this.spriteVariant].y,
             imageSize.x,
             imageSize.y
         );
@@ -56,26 +34,33 @@ export default class Unit {
     }
 
     getSprite(pixiLoader) {
-        if (this.sprite) { return this.sprite; }
+        if (this.sprite && !this.spriteDirty) { return this.sprite; }
+        
+        this.sprite && this.spriteContainer.removeChild(this.sprite);
 
         this.sprite = this.getSpriteFromDef(pixiLoader);
 
         const tileSize = getTileSize();
         
-        this.sprite.position.x = this.tileCoord.x * tileSize.x;
-        this.sprite.position.y = this.tileCoord.y * tileSize.y;
+        // align with bottom center of tile
+        this.spriteContainer.position.x = (this.tileCoord.x + 0.5) * tileSize.x - this.sprite.width / 2;
+        this.spriteContainer.position.y = (this.tileCoord.y + 1) * tileSize.y - this.sprite.height;
 
-        this.sprite.width = tileSize.x;
-        this.sprite.height = tileSize.y;
+        this.spriteDirty = false;
+        this.spriteContainer.addChild(this.sprite);
 
         return this.sprite;
     }
 
     addToContainer(unitContainer, pixiLoader) {
-        const sprite = this.getSprite(pixiLoader);
-        if (sprite.parent) {
+        this.getSprite(pixiLoader);
+        if (this.spriteContainer.parent) {
             throw new Error("Can't have multiple parents.");
         }
-        unitContainer.addChild(sprite);
+        unitContainer.addChild(this.spriteContainer);
+    }
+
+    endTurn() {
+
     }
 }

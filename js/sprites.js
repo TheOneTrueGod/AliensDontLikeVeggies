@@ -4,6 +4,7 @@ export const SpriteList = {
     ALIEN_YOUNG: 'alien_young',
     ALIEN_EGG: 'alien_egg',
     TERRAIN: 'terrain',
+    CIRCLE: 'circle',
 };
 
 export default class AssetLoader {
@@ -16,6 +17,8 @@ export default class AssetLoader {
             .add(SpriteList.ALIEN_ADULT, '/assets/AlienAdult.png')
             .add(SpriteList.ALIEN_YOUNG, '/assets/AlienYoung.png')
             .add(SpriteList.ALIEN_EGG, '/assets/AlienEgg.png')
+            // other
+            .add(SpriteList.CIRCLE, '/assets/plain-circle.png')
             ;
 
         pixiLoader.onComplete.add(() => { 

@@ -1,12 +1,13 @@
-import AssetLoader, { SpriteList } from './sprites.js';
+import AssetLoader from './sprites.js';
 import GameDataManager from './data/gameDataManager.js';
-import { getCanvasSize } from './constants.js';
+import { getPixiCanvasSize } from './constants.js';
+import ControlsManager from './data/controlsManager.js';
 
 const DEBUG_MODE = false;
 
 export default class MainGame {
-    constructor(canvasElement) {
-        this.pixiApp = new PIXI.Application(getCanvasSize());
+    constructor(canvasElement, controlsElement) {
+        this.pixiApp = new PIXI.Application(getPixiCanvasSize());
         this.pixiApp.renderer.backgroundColor = 0x22AA22;
         this.pixiLoader = new PIXI.Loader();
 
@@ -21,6 +22,10 @@ export default class MainGame {
         };
 
         this.gameDataManager = new GameDataManager(this.renderContainers);
+
+        ControlsManager.createControlsUI(controlsElement, () => {
+            this.endTurn();
+        });
     }
     
     startLoad() {
@@ -39,5 +44,9 @@ export default class MainGame {
 
         this.gameDataManager.terrainManager.createTerrain(this.renderContainers.terrain, this.pixiLoader);
         this.gameDataManager.unitManager.createInitialUnits(this.pixiLoader);
+    }
+
+    endTurn() {
+        this.gameDataManager.unitManager.endTurn(this.pixiLoader);
     }
 }
