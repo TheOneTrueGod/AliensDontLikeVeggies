@@ -20,7 +20,7 @@ export default class MainGame {
             effects: new PIXI.Container(),
         };
 
-        this.gameDataManager = new GameDataManager();
+        this.gameDataManager = new GameDataManager(this.renderContainers);
     }
     
     startLoad() {
@@ -38,5 +38,6 @@ export default class MainGame {
         }
 
         this.gameDataManager.terrainManager.createTerrain(this.renderContainers.terrain, this.pixiLoader);
+        this.gameDataManager.unitManager.createInitialUnits(this.pixiLoader);
     }
 }

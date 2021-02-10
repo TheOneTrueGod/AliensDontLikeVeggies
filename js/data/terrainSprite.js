@@ -4,12 +4,15 @@ import { SpriteList } from '../sprites.js';
 export const TerrainTypes = {
     GRASS: 'grass',
     DIRT: 'dirt',
+    ASH: 'ash',
+    WATER: 'water',
 }
 
 const TerrainTypeOffsets = {
     [TerrainTypes.GRASS]: { x: 3, y: 1 },
     [TerrainTypes.DIRT]: { x: 0, y: 0 },
     [TerrainTypes.ASH]: { x: 3, y: 0 },
+    [TerrainTypes.WATER]: { x: 9, y: 0 },
 }
 
 const Directions = {
