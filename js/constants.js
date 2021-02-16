@@ -1,5 +1,5 @@
 export function getMapSize() {
-    return { x: 20, y: 10 };
+    return { x: 12, y: 12 };
 }
 
 export function getPixiCanvasSize() {
@@ -7,6 +7,7 @@ export function getPixiCanvasSize() {
 }
 
 export function getTileSize() {
+    return { x: 32, y: 32};
     const { x: mapSizeX, y: mapSizeY } = getMapSize();
     const { x: canvasSizeX, y: canvasSizeY } = getPixiCanvasSize();
 

@@ -13,16 +13,14 @@ export default class UnitManager {
     
     createInitialUnits(pixiLoader) {
         const mapSize = getMapSize();
-        const startX = Math.floor(mapSize.x / 4 * 3) - 1;
-        const startY = Math.floor(mapSize.y / 2);
-        this.addUnit(pixiLoader, new Alien({ x: startX, y: startY - 1 }, AlienDefs.AlienAdult));
-        this.addUnit(pixiLoader, new Alien({ x: startX, y: startY }, AlienDefs.AlienYoung));
-        this.addUnit(pixiLoader, new Alien({ x: startX, y: startY + 1 }, AlienDefs.AlienEgg));
 
-        const plantStartY = 3;
-        for (let x = 3; x < 7; x++) {
-            this.addUnit(pixiLoader, new Plant({ x, y: plantStartY }, PlantDefs.Potato));
-            this.addUnit(pixiLoader, new Plant({ x, y: plantStartY + 1 }, PlantDefs.Peppers));
+        this.addUnit(pixiLoader, new Alien({ x: 2, y: 5 }, AlienDefs.AlienAdult));
+        this.addUnit(pixiLoader, new Alien({ x: 9, y: 5 }, AlienDefs.AlienYoung));
+        this.addUnit(pixiLoader, new Alien({ x: 5, y: 2 }, AlienDefs.AlienEgg));
+
+        for (let x = 5; x < 7; x++) {
+            this.addUnit(pixiLoader, new Plant({ x, y: 5 }, PlantDefs.Potato));
+            this.addUnit(pixiLoader, new Plant({ x, y: 6 }, PlantDefs.Peppers));
         }
         
     }

@@ -31,6 +31,8 @@
             border-radius: 5px;
             padding: 8px;
             margin: 8px;
+            user-select: none;
+            cursor: pointer;
         }
     </style>
     <div class="gameContainer">

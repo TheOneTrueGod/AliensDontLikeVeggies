@@ -6,13 +6,17 @@ export const TerrainTypes = {
     DIRT: 'dirt',
     ASH: 'ash',
     WATER: 'water',
+    PIT: 'pit',
+    TILLED: 'tilled',
 }
 
 const TerrainTypeOffsets = {
-    [TerrainTypes.GRASS]: { x: 3, y: 1 },
+    [TerrainTypes.GRASS]: { x: 0, y: 1 },
     [TerrainTypes.DIRT]: { x: 0, y: 0 },
     [TerrainTypes.ASH]: { x: 3, y: 0 },
     [TerrainTypes.WATER]: { x: 9, y: 0 },
+    [TerrainTypes.PIT]: { x: 8, y: 0 },
+    [TerrainTypes.TILLED]: { x: 1, y: 0 }
 }
 
 const Directions = {
@@ -131,11 +135,12 @@ export default class TerrainSprite {
         if (this.backgroundTerrain !== this.terrainType) {
             const tc = this.tileCoord;
             const tt = this.terrainType;
+            const bt = this.terrainType; //TerrainTypes.PIT;
             const neighbours =
-                ((this.terrainManager.getTerrainAt({ x: tc.x, y: tc.y - 1 }, tt) !== tt) && Directions.TOP) +
-                ((this.terrainManager.getTerrainAt({ x: tc.x + 1, y: tc.y }, tt) !== tt) && Directions.RIGHT) +
-                ((this.terrainManager.getTerrainAt({ x: tc.x, y: tc.y + 1 }, tt) !== tt) && Directions.BOTTOM) +
-                ((this.terrainManager.getTerrainAt({ x: tc.x - 1, y: tc.y }, tt) !== tt) && Directions.LEFT);
+                ((this.terrainManager.getTerrainAt({ x: tc.x, y: tc.y - 1 }, bt) !== tt) && Directions.TOP) +
+                ((this.terrainManager.getTerrainAt({ x: tc.x + 1, y: tc.y }, bt) !== tt) && Directions.RIGHT) +
+                ((this.terrainManager.getTerrainAt({ x: tc.x, y: tc.y + 1 }, bt) !== tt) && Directions.BOTTOM) +
+                ((this.terrainManager.getTerrainAt({ x: tc.x - 1, y: tc.y }, bt) !== tt) && Directions.LEFT);
 
             const terrainSprite = getTerrainSprite(
                 pixiLoader.resources[SpriteList.TERRAIN].texture,
